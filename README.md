@@ -37,7 +37,7 @@ file_extensions=[
 ]
 ```
 
-As is it a regular python file, it is possible to use variables to reduce copy and paste jobs:
+As it is a regular python file, it is possible to use variables to reduce copy and paste jobs:
 
 ```
 base_path = '/Users/user'
