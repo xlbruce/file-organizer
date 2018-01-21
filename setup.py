@@ -11,7 +11,6 @@ setup(
     licence='MIT',
     download_url='https://github.com/xlbruce/file-organizer/archive/0.1.tar.gz',
     keywords=['file', 'organizer'],
-    install_requires=['configparser'],
     classifiers=[],
     zip_safe=False
 )
