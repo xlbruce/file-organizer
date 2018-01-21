@@ -8,9 +8,8 @@ setup(
     author='Gilson de Paula',
     author_email='gilsonsvieira93@gmail.com',
     url='https://github.com/xlbruce/file-organizer',
-    licence='MIT',
+    license='MIT',
     download_url='https://github.com/xlbruce/file-organizer/archive/0.1.tar.gz',
     keywords=['file', 'organizer'],
-    classifiers=[],
-    zip_safe=False
+    classifiers=[]
 )
