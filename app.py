@@ -10,8 +10,10 @@ def file_extension(filename):
 
     return m.group(0)
 
+
 def filter_all(filename):
     return True
+
 
 def create_filter(extensions=list()):
     if not extensions:
@@ -25,11 +27,13 @@ def create_filter(extensions=list()):
         return extension in extensions
     return filter
      
+
 def get_files(src, file_filter):
     filenames = os.listdir(src)
     fullnames = (os.path.join(src, filename) for filename in filenames)
     return filter(file_filter, fullnames)
      
+
 def valid_extensions(extensions_str):
     valid = []
     if extensions_str:
@@ -37,6 +41,7 @@ def valid_extensions(extensions_str):
 
     return valid
     
+
 def create_operate(override):
     operate = shutil.move
     if not override:
@@ -47,6 +52,7 @@ def create_operate(override):
 
     return wrapper
     
+
 @click.command()
 @click.argument('src', type=click.Path(exists=True, resolve_path=True))
 @click.argument('dest',type=click.Path(exists=False, writable=True, resolve_path=True))
