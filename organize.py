@@ -64,7 +64,7 @@ def create_operate(delete):
 @click.argument('src', type=click.Path(exists=True, resolve_path=True))
 @click.argument('dest',type=click.Path(exists=False, writable=True, resolve_path=True))
 @click.option('--extensions', type=click.STRING, help='List of extensions to move separated by comma')
-@click.option('--delete/--no-delete', default=True)
+@click.option('--delete/--no-delete', default=True, help="Whether source files must be deleted after they're organized")
 @click.option('-v', '--verbose', count=True)
 def main(src, dest, extensions, delete, verbose):
     file_filter = create_filter(valid_extensions(extensions))
