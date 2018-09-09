@@ -8,7 +8,7 @@ import sys
 def operate(func, src, dst):
     if not args.overwrite:
         if os.path.exists(dst):
-            answer = str(raw_input('Overwrite file "{}"?   (y/n/a) '.format(dst))).lower()
+            answer = str(input('Overwrite file "{}"?   (y/n/a) '.format(dst))).lower()
             if answer == 'a':
                 args.overwrite = True
             elif answer != 'y':
@@ -18,7 +18,7 @@ def operate(func, src, dst):
         action = 'Moving'
         if args.copy:
             action = 'Copying'
-        print '{} file [{}] to [{}]'.format(action, src, dst)
+        print('{} file [{}] to [{}]'.format(action, src, dst))
 
     func(src, dst)
 
@@ -43,13 +43,13 @@ def main(args):
         config_path = os.path.abspath('config.py')
 
     if not os.path.exists(config_path):
-        print 'File not found: {}'.format(config_path)
+        print('File not found: {}'.format(config_path))
         sys.exit(1)
 
     config = imp.load_source('config', config_path)
 
     if not os.path.exists(origin):
-       print 'Folder "{}" not found'.format(origin)
+       print('Folder "{}" not found'.format(origin))
        sys.exit(1)
 
     action = shutil.move
@@ -68,7 +68,7 @@ def main(args):
                     operate(action, abs_file, os.path.join(abs_destination, file))
                     break
 
-    print 'Done'
+    print('Done')
 
 if __name__ == '__main__':
     args = process_args()
