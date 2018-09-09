@@ -42,13 +42,18 @@ def valid_extensions(extensions_str):
     return valid
     
 
-def create_operate(override):
+def create_operate(delete):
     operate = shutil.move
-    if not override:
+    if not delete:
         operate = shutil.copy
 
     def wrapper(src, dest):
-        return operate(src, dest) 
+        try:
+            return operate(src, dest) 
+        except shutil.Error as e:
+            print(f"Error while operating over ({src},{dest})")
+            print(e)
+            return None
 
     return wrapper
     
@@ -57,12 +62,12 @@ def create_operate(override):
 @click.argument('src', type=click.Path(exists=True, resolve_path=True))
 @click.argument('dest',type=click.Path(exists=False, writable=True, resolve_path=True))
 @click.option('--extensions', type=click.STRING, help='List of extensions to move separated by comma')
-@click.option('--override/--no-override', default=False)
+@click.option('--delete/--no-delete', default=True)
 @click.option('-v', '--verbose', count=True)
-def main(src, dest, extensions, override, verbose):
+def main(src, dest, extensions, delete, verbose):
     file_filter = create_filter(valid_extensions(extensions))
     src_files = list(get_files(src, file_filter))
-    operate_file = create_operate(override)
+    operate_file = create_operate(delete)
     for src_file in list(src_files):
         operate_file(src_file, dest)
 
