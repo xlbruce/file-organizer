@@ -1,7 +1,7 @@
 import click
 import re
 import os
-import sys
+import shutil
 
 def file_extension(filename):
     m = re.search(r'(?<=\.).*$', filename) 
@@ -36,6 +36,16 @@ def valid_extensions(extensions_str):
 
     return valid
     
+def create_operate(override):
+    operate = shutil.move
+    if not override:
+        operate = shutil.copy
+
+    def wrapper(src, dest):
+        return operate(src, dest) 
+
+    return wrapper
+    
 @click.command()
 @click.argument('src', type=click.Path(exists=True, resolve_path=True))
 @click.argument('dest',type=click.Path(exists=False, writable=True, resolve_path=True))
@@ -44,7 +54,12 @@ def valid_extensions(extensions_str):
 @click.option('-v', '--verbose', count=True)
 def main(src, dest, extensions, override, verbose):
     file_filter = create_filter(valid_extensions(extensions))
-    src_files = get_files(src, file_filter)
+    src_files = list(get_files(src, file_filter))
+    operate_file = create_operate(override)
+    for src_file in list(src_files):
+        operate_file(src_file, dest)
+
+    print("Done")
 
 if __name__ == '__main__':
     main()
