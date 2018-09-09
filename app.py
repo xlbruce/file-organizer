@@ -26,8 +26,9 @@ def create_filter(extensions=list()):
     return filter
      
 def get_files(src, file_filter):
-    files = os.listdir(src)
-    return filter(file_filter, files)
+    filenames = os.listdir(src)
+    fullnames = (os.path.join(src, filename) for filename in filenames)
+    return filter(file_filter, fullnames)
      
 def valid_extensions(extensions_str):
     valid = []
