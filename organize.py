@@ -8,7 +8,7 @@ import shutil
 from itertools import groupby
 
 def file_extension(filename):
-    m = re.search(r'(?<=\.).*$', filename) 
+    m = re.search(r'(?<=[^/]\.).*$', filename) 
     if not m:
         return None
 
@@ -16,7 +16,7 @@ def file_extension(filename):
 
 
 def filter_all(filename):
-    return True
+    return bool(file_extension(filename))
 
 
 def create_filter(extensions=list()):
@@ -34,6 +34,7 @@ def create_filter(extensions=list()):
 
 def get_files(src, file_filter):
     filenames = next(os.walk(src))[2]
+    filenames = filter(file_filter, filenames)
     fullnames = (os.path.join(src, filename) for filename in filenames)
     return list(filter(file_filter, fullnames))
      
