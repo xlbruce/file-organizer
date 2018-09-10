@@ -3,10 +3,14 @@
 ## Description
 A Python file organizer based on optional user defined file extensions.
 
+## Installation
+
+Just run `pip install file-organizer`.
+
 ## Command line synopsys
 
 ```
-Usage: organize.py [OPTIONS] SRC DEST
+Usage: organize [OPTIONS] SRC DEST
 
 Options:
   --extensions TEXT       List of extensions to move separated by comma
@@ -17,7 +21,7 @@ Options:
 ```
 
 ## Basic usage example
-``` $ python organizer.py ~/Downloads ~/Organized```
+``` $ organize ~/Downloads ~/Organized```
 
 Executing the above command, will __move__ all files inside `~/Downloads` into separate folders inside `~/Organized` based each file extension.
 To __copy__ instead, you can pass the `--no-delete` flag.
