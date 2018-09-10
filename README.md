@@ -7,6 +7,8 @@ A Python file organizer based on optional user defined file extensions.
 
 Just run `pip install file-organizer`.
 
+> Python 3.7+ required
+
 ## Command line synopsys
 
 ```
