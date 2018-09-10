@@ -6,9 +6,10 @@ with open('README.md', 'r') as f:
 setup(
     name='file_organizer',
     py_modules=['organize'],
-    version='0.2.1',
+    version='0.2.3',
     description='A file organizer based on file suffixes and user chosen file extensions',
     long_description=long_description,
+    long_description_content_type='text/markdown',
     author='Gilson de Paula',
     author_email='gilsonsvieira93@gmail.com',
     url='https://github.com/xlbruce/file-organizer',
