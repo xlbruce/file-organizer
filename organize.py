@@ -27,8 +27,7 @@ def create_filter(extensions=list()):
         if not filename:
             return False
 
-        extension = file_extension(filename)
-        return extension in extensions
+        return file_extension(filename) in extensions
     return filter
      
 
