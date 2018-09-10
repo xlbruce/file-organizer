@@ -5,6 +5,8 @@ import re
 import os
 import shutil
 
+from itertools import groupby
+
 def file_extension(filename):
     m = re.search(r'(?<=\.).*$', filename) 
     if not m:
@@ -31,12 +33,12 @@ def create_filter(extensions=list()):
      
 
 def get_files(src, file_filter):
-    filenames = os.listdir(src)
+    filenames = next(os.walk(src))[2]
     fullnames = (os.path.join(src, filename) for filename in filenames)
-    return filter(file_filter, fullnames)
+    return list(filter(file_filter, fullnames))
      
 
-def valid_extensions(extensions_str):
+def validate_extensions(extensions_str):
     valid = []
     if extensions_str:
         valid = extensions_str.split(',')
@@ -59,7 +61,7 @@ def create_operate(delete):
 
     return wrapper
     
-
+    
 @click.command()
 @click.argument('src', type=click.Path(exists=True, resolve_path=True))
 @click.argument('dest',type=click.Path(exists=False, writable=True, resolve_path=True))
@@ -67,11 +69,18 @@ def create_operate(delete):
 @click.option('--delete/--no-delete', default=True, help="Whether source files must be deleted after they're organized")
 @click.option('-v', '--verbose', count=True)
 def main(src, dest, extensions, delete, verbose):
-    file_filter = create_filter(valid_extensions(extensions))
-    src_files = list(get_files(src, file_filter))
+    valid_extensions = validate_extensions(extensions)
+    file_filter = create_filter(valid_extensions)
     operate_file = create_operate(delete)
-    for src_file in list(src_files):
-        operate_file(src_file, dest)
+    src_files = get_files(src, file_filter)
+
+    groups = groupby(src_files, file_extension)
+    for extension, files in groups:
+        dest_path = os.path.join(dest, extension)
+        if not os.path.exists(dest_path):
+            os.makedirs(dest_path)
+        for src_file in list(files):
+            operate_file(src_file, dest_path)
 
     print("Done")
 
