@@ -8,7 +8,7 @@ import shutil
 from itertools import groupby
 
 def file_extension(filename):
-    m = re.search(r'(?<=[^/]\.).*$', filename) 
+    m = re.search(r'(?<=[^/\\]\.).*$', filename) 
     if not m:
         return None
 
